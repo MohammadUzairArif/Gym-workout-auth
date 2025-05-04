@@ -1,0 +1,30 @@
+{
+  "name": "mern-backend-boilerplate",
+  "version": "1.0.0",
+  "description": "Generalized and deployment-ready backend boilerplate using Express, Mongoose, and Node.js.",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "dev": "nodemon server.js",
+    "start": "node server.js"
+  },
+  "keywords": [
+    "express",
+    "mongoose",
+    "nodejs",
+    "boilerplate",
+    "backend",
+    "mern"
+  ],
+  "author": "Muhammad Shahzeel",
+  "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "mongoose": "^8.14.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  }
+}
