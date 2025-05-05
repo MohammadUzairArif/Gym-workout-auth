@@ -42,3 +42,42 @@ export const createWorkout = async (req, res) => {
     }
 
 }
+// update a workout
+export const UpdateWorkout = async (req, res) => {
+    const { id } = req.params;
+    const { title, load, reps } = req.body;
+    // check if id is valid
+    if(!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(404).json({ error: "No such workout" });
+    }
+    
+    try {
+        const Updateworkout = await WorkoutModel.findOneAndUpdate({ _id: id }, { title, load, reps });
+        if (!Updateworkout) {
+            return res.status(404).json({ error: "Workout not found" });
+        }
+        res.status(200).json(Updateworkout);
+        
+    } catch (error) {
+        console.error(error)
+        res.status(400).json({ error: error.message });
+    }
+}
+//delete a workout
+export const deleteWorkout = async (req, res) => {
+    const { id } = req.params;
+    // check if id is valid
+    if(!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(404).json({ error: "No such workout" });
+    }
+    try {
+        const workout = await WorkoutModel.findByIdAndDelete(id);
+        if (!workout) {
+            return res.status(404).json({ error: "Workout not found" });
+        }
+        res.status(200).json(workout);
+    } catch (error) {
+        console.error(error)
+        res.status(400).json({ error: error.message });
+    }
+}
