@@ -22,6 +22,7 @@ router.post("/",async (req, res) => {
     }
 
 })
+
 // Update a workout
 router.patch("/:id", (req, res) => {
     res.status(200).json({ message: "Update a workout" });
