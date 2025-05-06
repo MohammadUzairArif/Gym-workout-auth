@@ -5,11 +5,11 @@ const api = axios.create({
   baseURL: "http://localhost:5000/api",
 });
 // Get All Workouts
-export const getWorkout = () => {
+export const getWorkouts = () => {
   return api.get("/workouts");
 };
 // Get Single Workout
-export const getSingleWorkout = (id) => {
+export const getWorkout = (id) => {
   return api.get(`/workouts/${id}`);
 };
 
