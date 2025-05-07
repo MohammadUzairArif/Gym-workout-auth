@@ -1,17 +1,19 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { getWorkouts } from '../api/workoutApi';
 import WorkoutDetails from '../components/ui/WorkoutDetails';
 import WorkoutForm from '../components/ui/WorkoutForm';
+import { useWorkoutContext } from '../hooks/useWorkoutContext';
 
 const Home = () => {
-  const [workouts, setWorkouts] = useState(null);
+  const {workouts, dispatch} = useWorkoutContext();
 
   useEffect(() => {
     const fetchWorkouts = async () => {
       try {
         const response = await getWorkouts();
         if (response.status === 200) {
-          setWorkouts(response.data);
+          
+          dispatch({ type: 'SET_WORKOUTS', payload: response.data });
         }
       } catch (error) {
         console.error(error);
@@ -29,7 +31,7 @@ const Home = () => {
           ))}
       </div>
       <div className="md:w-[400px]">
-        <WorkoutForm setWorkouts={setWorkouts} />
+        <WorkoutForm/>
       </div>
     </div>
   );

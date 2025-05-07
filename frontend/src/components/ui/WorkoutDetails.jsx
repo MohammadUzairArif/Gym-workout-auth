@@ -19,7 +19,11 @@ const WorkoutDetails = ({ workout }) => {
         {workout.sets}
       </p>
       <p className="text-sm text-gray-500 dark:text-gray-400 mt-2">
-        {new Date(workout.createdAt).toLocaleString()}
+      {new Date(workout.createdAt).toLocaleString(undefined, {
+            dateStyle: 'medium',
+            timeStyle: 'short',
+            hour12: true,
+          })}
       </p>
     </div>
   );
