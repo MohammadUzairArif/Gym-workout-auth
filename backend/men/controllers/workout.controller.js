@@ -17,13 +17,14 @@ const getWorkouts = async (req, res) => {
 
 // Create a new workout
 const createWorkout = async (req, res) => {
-  const { title, reps, load } = req.body;
+  const { title, reps, load , sets } = req.body;
   
   try {
     const workout = new  WorkoutModel({
       title,
       reps,
       load,
+      sets,
     });
     await workout.save();
     res.status(200).json(workout);

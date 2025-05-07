@@ -1,38 +1,38 @@
-import React, { useEffect,useState } from 'react'
-import { getWorkouts } from '../api/workoutApi'
-import WorkoutDetails from '../components/ui/WorkoutDetails'
+import React, { useEffect, useState } from 'react';
+import { getWorkouts } from '../api/workoutApi';
+import WorkoutDetails from '../components/ui/WorkoutDetails';
+import WorkoutForm from '../components/ui/WorkoutForm';
 
 const Home = () => {
-  const [workouts,setWorkouts ] = useState(null)
-useEffect(() => {
-  const fetchWorkouts = async () => {
-  try {
-    const response = await getWorkouts();
-    if (response.status === 200) {
-      
-      setWorkouts(response.data);
-   ;
-  
-    }
-  } catch (error) {
-    console.error(error);
-   
-  }
-}
-  fetchWorkouts()
+  const [workouts, setWorkouts] = useState(null);
 
-  }
-  ,[])
-  
+  useEffect(() => {
+    const fetchWorkouts = async () => {
+      try {
+        const response = await getWorkouts();
+        if (response.status === 200) {
+          setWorkouts(response.data);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchWorkouts();
+  }, []);
+
   return (
-  <div className="home">
-    <div className="workouts">
-    {workouts && workouts.map((workout) => (
-      < WorkoutDetails key={workout._id} workout={workout} />
-    ))}
+    <div className="flex flex-col md:flex-row gap-8 px-6 py-10 max-w-[1400px] mx-auto font-poppins">
+      <div className="flex-1 space-y-6">
+        {workouts &&
+          workouts.map((workout) => (
+            <WorkoutDetails key={workout._id} workout={workout} />
+          ))}
+      </div>
+      <div className="md:w-[400px]">
+        <WorkoutForm setWorkouts={setWorkouts} />
+      </div>
     </div>
-  </div>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;
