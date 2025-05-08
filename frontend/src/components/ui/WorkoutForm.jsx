@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { addWorkout } from '../../api/workoutApi';
 import { useWorkoutContext } from '../../hooks/useWorkoutContext';
 
-function WorkoutForm() {
+function WorkoutForm({ editWorkout, setEditWorkout }) {
   const [workoutData, setWorkoutData] = useState({ title: '', load: '', reps: '', sets: '' });
   const [error, setError] = useState(null);
   const { dispatch } = useWorkoutContext();
@@ -34,7 +34,7 @@ function WorkoutForm() {
       onSubmit={handleSubmit}
       className="bg-gray-900 text-white p-6 rounded-xl shadow-md border border-gray-700 font-poppins space-y-4"
     >
-      <h3 className="text-xl font-semibold text-emerald-400">Add a New Workout</h3>
+      <h3 className="text-xl font-semibold text-emerald-400">{editWorkout ? 'Update current Workout' : "Add a new Workout"}</h3>
       {['title', 'load', 'reps', 'sets'].map((field) => (
         <input
           key={field}
@@ -50,7 +50,7 @@ function WorkoutForm() {
         type="submit"
         className="w-full bg-emerald-500 hover:bg-emerald-600 text-white py-2 rounded-md transition"
       >
-        Add Workout
+        {editWorkout ? 'Update Workout' : 'Add Workout'}
       </button>
       {error && <div className="text-sm text-red-400 bg-red-900 p-2 rounded">{error}</div>}
     </form>

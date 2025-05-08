@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
-import { Trash2 } from 'lucide-react';
+import { Trash2, Pencil } from 'lucide-react'; // Import Edit icon
 import { deleteWorkout } from '../../api/workoutApi';
 import { useWorkoutContext } from '../../hooks/useWorkoutContext';
+import UpdateWorkoutModal from './UpdateWorkoutModal';
 
-const WorkoutDetails = ({ workout }) => {
+const WorkoutDetails = ({ workout, setEditWorkout , editWorkout  }) => {
   const { dispatch } = useWorkoutContext();
   const [error, SetError] = useState(null);
+  const [showModal, setShowModal] = useState(false);
+ 
 
   const handleDelete = async (id) => {
     try {
@@ -22,25 +25,59 @@ const WorkoutDetails = ({ workout }) => {
     }
   };
 
+  const handleEdit = (id,data) => {
+    setShowModal(true)
+  }
+
   return (
-    <div className="bg-gray-900 text-white shadow-lg rounded-xl p-6 border border-gray-700 hover:shadow-2xl transition-all">
-      <h4 className="text-2xl font-semibold mb-2 text-emerald-400">{workout.title}</h4>
-      <p><span className="font-medium text-gray-400">Load:</span> {workout.load} kg</p>
-      <p><span className="font-medium text-gray-400">Reps:</span> {workout.reps}</p>
-      <p><span className="font-medium text-gray-400">Sets:</span> {workout.sets}</p>
-      <p className="text-sm text-gray-500 mt-2">
-        {new Date(workout.createdAt).toLocaleString('en-US', {
+    <div className="bg-white dark:bg-gray-800 shadow-md rounded-lg p-5 mb-4 font-poppins border border-gray-200 dark:border-gray-700 transition-all">
+      <h4 className="text-xl font-bold mb-2 text-gray-900 dark:text-white">
+        {workout.title}
+      </h4>
+      <p className="text-gray-700 dark:text-gray-300 mb-1">
+        <strong className="text-gray-900 dark:text-gray-100">Load (kg): </strong>
+        {workout.load}
+      </p>
+      <p className="text-gray-700 dark:text-gray-300 mb-1">
+        <strong className="text-gray-900 dark:text-gray-100">Reps: </strong>
+        {workout.reps}
+      </p>
+      <p className="text-gray-700 dark:text-gray-300 mb-1">
+        <strong className="text-gray-900 dark:text-gray-100">Sets: </strong>
+        {workout.sets}
+      </p>
+      <p className="text-sm text-gray-500 dark:text-gray-400 mt-2">
+        {new Date(workout.createdAt).toLocaleString(undefined, {
           dateStyle: 'medium',
           timeStyle: 'short',
+          hour12: true,
         })}
       </p>
-      <button
-        onClick={() => handleDelete(workout._id)}
-        className="mt-4 flex items-center gap-2 px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-md transition"
-      >
-        <Trash2 size={18} /> Delete
-      </button>
-      {error && <p className="text-red-400 text-sm mt-2">{error}</p>}
+
+      <div className="mt-4 flex items-center gap-3">
+        <button
+          onClick={() => handleDelete(workout._id)}
+          className="flex items-center gap-2 px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition-all"
+        >
+          <Trash2 size={18} />
+          Delete
+        </button>
+        <button
+        onClick={()=>handleEdit(workout._id)} // Add an edit handler
+          className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-all"
+        >
+          <Pencil size={18} />
+          Edit
+        </button>
+        <UpdateWorkoutModal  isOpen={showModal}
+        onClose={() => setShowModal(false)}
+        workout={workout}
+/>
+      </div>
+
+      {error && (
+        <p className="text-sm text-red-500 mt-2 dark:text-red-400">{error}</p>
+      )}
     </div>
   );
 };
