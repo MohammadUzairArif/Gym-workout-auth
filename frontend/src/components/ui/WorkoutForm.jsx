@@ -1,46 +1,28 @@
 import React, { useState } from 'react';
 import { addWorkout } from '../../api/workoutApi';
-import { useWorkoutContext } from '../../hooks/useWorkoutContext'; 
+import { useWorkoutContext } from '../../hooks/useWorkoutContext';
 
 function WorkoutForm() {
-  const [workoutData, setWorkoutData] = useState({
-    title: '',
-    load: '',
-    reps: '',
-    sets: '' // New field
-  });
-
+  const [workoutData, setWorkoutData] = useState({ title: '', load: '', reps: '', sets: '' });
   const [error, setError] = useState(null);
-  const {  dispatch } = useWorkoutContext(); // Assuming you have a context to manage workouts
+  const { dispatch } = useWorkoutContext();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setWorkoutData((prev) => ({
-      ...prev,
-      [name]: value
-    }));
+    setWorkoutData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSUbmit = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
       const response = await addWorkout(workoutData);
-
       if (response.status !== 200) {
         setError(response.data.error);
         return;
       }
-
       dispatch({ type: 'ADD_WORKOUT', payload: response.data });
-
+      setWorkoutData({ title: '', load: '', reps: '', sets: '' });
       setError(null);
-      setWorkoutData({
-        title: '',
-        load: '',
-        reps: '',
-        sets: '' // Reset the new field
-      });
     } catch (error) {
       console.error("Error adding workout:", error);
       setError("An error occurred while adding the workout.");
@@ -49,61 +31,28 @@ function WorkoutForm() {
 
   return (
     <form
-      onSubmit={handleSUbmit}
-      className="bg-white dark:bg-gray-900 p-6 rounded-xl shadow-md border border-gray-200 dark:border-gray-800 w-full max-w-md font-poppins"
+      onSubmit={handleSubmit}
+      className="bg-gray-900 text-white p-6 rounded-xl shadow-md border border-gray-700 font-poppins space-y-4"
     >
-      <h3 className="text-xl font-semibold mb-4 text-gray-800 dark:text-white">
-        Add a New Workout
-      </h3>
-
-      <input
-        type="text"
-        name="title"
-        value={workoutData.title}
-        onChange={handleChange}
-        placeholder="Workout Title"
-        className="w-full mb-3 px-4 py-2 rounded-md bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 border border-gray-300 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-primary"
-      />
-
-      <input
-        type="number"
-        name="load"
-        value={workoutData.load}
-        onChange={handleChange}
-        placeholder="Load (kg)"
-        className="w-full mb-3 px-4 py-2 rounded-md bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 border border-gray-300 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-primary"
-      />
-
-      <input
-        type="number"
-        name="reps"
-        value={workoutData.reps}
-        onChange={handleChange}
-        placeholder="Reps"
-        className="w-full mb-3 px-4 py-2 rounded-md bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 border border-gray-300 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-primary"
-      />
-
-      <input
-        type="number"
-        name="sets"
-        value={workoutData.sets}
-        onChange={handleChange}
-        placeholder="Sets"
-        className="w-full mb-4 px-4 py-2 rounded-md bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 border border-gray-300 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-primary"
-      />
-
+      <h3 className="text-xl font-semibold text-emerald-400">Add a New Workout</h3>
+      {['title', 'load', 'reps', 'sets'].map((field) => (
+        <input
+          key={field}
+          type={field === 'title' ? 'text' : 'number'}
+          name={field}
+          value={workoutData[field]}
+          onChange={handleChange}
+          placeholder={field.charAt(0).toUpperCase() + field.slice(1)}
+          className="w-full px-4 py-2 rounded-md bg-gray-800 border border-gray-600 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+        />
+      ))}
       <button
         type="submit"
-        className="w-full bg-primary text-white py-2 rounded-md hover:bg-emerald-600 transition-colors duration-300"
+        className="w-full bg-emerald-500 hover:bg-emerald-600 text-white py-2 rounded-md transition"
       >
         Add Workout
       </button>
-
-      {error && (
-        <div className="mt-3 text-sm text-red-500 bg-red-100 dark:bg-red-900 dark:text-red-300 p-2 rounded">
-          {error}
-        </div>
-      )}
+      {error && <div className="text-sm text-red-400 bg-red-900 p-2 rounded">{error}</div>}
     </form>
   );
 }
