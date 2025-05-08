@@ -32,7 +32,7 @@ const Home = () => {
       </div>
       <div className="md:w-[400px]">
         <WorkoutForm/>
-        //ab agay kia
+        
       </div>
     </div>
   );

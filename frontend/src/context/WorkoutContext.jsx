@@ -10,7 +10,7 @@ const workoutsReducer = (state, action) => {
             }
         case 'ADD_WORKOUT':
             return {
-                workouts: [ ...state.workouts, action.payload]
+                workouts: [  action.payload,...state.workouts]
             }
         case 'DELETE_WORKOUT':
             return {

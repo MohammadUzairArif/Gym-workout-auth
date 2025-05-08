@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { addWorkout } from '../../api/workoutApi';
+import { useWorkoutContext } from '../../hooks/useWorkoutContext'; 
 
-function WorkoutForm({ setWorkouts }) {
+function WorkoutForm() {
   const [workoutData, setWorkoutData] = useState({
     title: '',
     load: '',
@@ -10,6 +11,7 @@ function WorkoutForm({ setWorkouts }) {
   });
 
   const [error, setError] = useState(null);
+  const {  dispatch } = useWorkoutContext(); // Assuming you have a context to manage workouts
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -30,9 +32,15 @@ function WorkoutForm({ setWorkouts }) {
         return;
       }
 
-      setWorkouts((prev) => [...prev, response.data]);
+      dispatch({ type: 'ADD_WORKOUT', payload: response.data });
+
       setError(null);
-      setWorkoutData({ title: '', load: '', reps: '', sets: '' }); // Reset
+      setWorkoutData({
+        title: '',
+        load: '',
+        reps: '',
+        sets: '' // Reset the new field
+      });
     } catch (error) {
       console.error("Error adding workout:", error);
       setError("An error occurred while adding the workout.");
