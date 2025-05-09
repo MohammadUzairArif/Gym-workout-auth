@@ -21,7 +21,7 @@ const Home = () => {
       }
     };
     fetchWorkouts();
-  }, []);
+  }, [dispatch]);
 
   return (
     <div className="flex flex-col md:flex-row gap-8 px-6 py-10 max-w-[1400px] mx-auto font-poppins">

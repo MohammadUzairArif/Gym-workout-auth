@@ -4,13 +4,14 @@ import cors from "cors"; // Import cors
 import connectDB from "./config/db.js";
 import workoutRoutes from "./routes/workout.route.js";
 import { errorHandler } from "./middlewares/errorHandler.js";
-
+import userRoutes from "./routes/user.route.js";
 dotenv.config();
 const app = express();
 
 app.use(cors()); 
 app.use(express.json());
 app.use("/api/workouts", workoutRoutes);
+app.use("/api/users", userRoutes);
 
 // Error handling middleware
 app.use(errorHandler);
