@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Save, X } from "lucide-react";
+import { updateWorkout } from '../../api/workoutApi';
+import { useWorkoutContext } from '../../hooks/useWorkoutContext';
 
 function UpdateWorkoutModal({ isOpen, onClose, workout }) {
+  const { dispatch } = useWorkoutContext(); // Assuming you have a context to manage workouts
   const [updatedWorkout, setUpdatedWorkout] = useState(workout);
 
   useEffect(() => {
@@ -18,10 +21,19 @@ function UpdateWorkoutModal({ isOpen, onClose, workout }) {
 
   const handleSubmit = async () => {
     // You can call updateWorkout here in the future
-    onClose();
+    try {
+      const response = await updateWorkout(workout._id, updatedWorkout);
+      if(response.status === 200) {
+        dispatch({ type: 'UPDATE_WORKOUT', payload: response.data });
+        // Handle success, e.g., show a success message or refresh the workout list
+        onClose();
+      }
+    } catch (error) {
+      console.error("Error updating workout:", error);
+    }
   };
 //.....
-  if (!isOpen) return null;
+  if (!isOpen) return null; 
 
   return (
     <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center px-4">
@@ -81,12 +93,19 @@ function UpdateWorkoutModal({ isOpen, onClose, workout }) {
               Cancel
             </button>
             <button
-              onClick={handleSubmit}
-              className="w-1/2 flex items-center justify-center gap-2 py-3.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-semibold shadow-md hover:shadow-emerald-400/20 transition-all"
-            >
-              <Save size={18} />
-              <span>Update</span>
-            </button>
+  disabled={!updatedWorkout.title || !updatedWorkout.load || !updatedWorkout.reps}
+  onClick={handleSubmit}
+  className={`w-1/2 flex items-center justify-center gap-2 py-3.5 rounded-xl font-semibold shadow-md transition-all
+    ${
+      !updatedWorkout.title || !updatedWorkout.load || !updatedWorkout.reps || !updatedWorkout.sets
+        ? 'bg-emerald-600 text-white opacity-50 cursor-not-allowed'
+        : 'bg-emerald-600 hover:bg-emerald-500 text-white hover:shadow-emerald-400/20'
+    }
+  `}
+>
+  <Save size={18} />
+  <span>Update</span>
+</button>
           </div>
         </div>
       </div>
