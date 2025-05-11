@@ -1,6 +1,5 @@
 import { Link } from 'react-router-dom';
 
-
 const Navbar = () => {
   return (
     <header className="bg-gray-900/90 backdrop-blur-md shadow-md sticky top-0 z-50 border-b border-gray-800">
@@ -13,7 +12,21 @@ const Navbar = () => {
           Workout<span className="text-emerald-400">Buddy</span>
         </Link>
 
-       
+        {/* Auth Links */}
+        <div className="flex items-center gap-4">
+          <Link
+            to="/login"
+            className="text-gray-300 hover:text-emerald-400 text-sm font-medium transition-colors duration-200"
+          >
+            Log In
+          </Link>
+          <Link
+            to="/signup"
+            className="bg-emerald-500 hover:bg-emerald-600 text-white text-sm font-medium px-4 py-2 rounded-md transition-colors duration-200"
+          >
+            Sign Up
+          </Link>
+        </div>
       </div>
     </header>
   );

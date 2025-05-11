@@ -5,14 +5,19 @@ import Footer from '../ui/Footer';
 
 const AppLayout = () => {
   return (
-    <div className="min-h-screen bg-gray-100 dark:bg-gray-950 text-gray-800 dark:text-gray-100 font-poppins transition-colors duration-300">
+    <div className="flex flex-col min-h-screen bg-gray-950 text-gray-100 font-poppins transition-colors duration-300">
+      {/* Top Nav */}
       <Navbar />
-      <main className="max-w-[1400px] mx-auto px-6 py-10">
-        <div className="bg-white dark:bg-gray-900 p-6 rounded-xl shadow-lg border border-gray-200 dark:border-gray-800 transition-all">
+
+      {/* Main Content Area */}
+      <main className="flex-grow px-6 py-10">
+        <div className="max-w-[1400px] mx-auto">
           <Outlet />
         </div>
       </main>
-      <Footer/>
+
+      {/* Footer at Bottom Always */}
+      <Footer />
     </div>
   );
 };

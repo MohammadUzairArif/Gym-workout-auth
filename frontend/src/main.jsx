@@ -8,9 +8,9 @@ import { AuthContextProvider } from "./context/AuthContext.jsx";
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <AuthContextProvider>
-    <WorkoutProvider>
-      <App />
-    </WorkoutProvider>
+      <WorkoutProvider>
+        <App />
+      </WorkoutProvider>
     </AuthContextProvider>
   </StrictMode>
 );
