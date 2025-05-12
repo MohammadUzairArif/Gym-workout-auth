@@ -20,9 +20,9 @@ export const addWorkout = (data) => {
 
 // Update Workout
 export const updateWorkout = (id, data) => {
-  return api.put(`/workouts/${id}`, data)
+  return api.put(`/workouts/${id}`, data);
 };
 // Delete Workout
 export const deleteWorkout = (id) => {
-  return api.delete(`/workouts/${id}`)
+  return api.delete(`/workouts/${id}`);
 };

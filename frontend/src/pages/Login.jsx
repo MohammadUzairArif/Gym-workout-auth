@@ -1,9 +1,9 @@
-import { useState } from 'react';
-import { useLogin } from '../hooks/UseLogin';
+import { useState } from "react";
+import { useLogin } from "../hooks/UseLogin";
 const Login = () => {
   const [formData, setFormData] = useState({
-    email: '',
-    password: ''
+    email: "",
+    password: "",
   });
   const { login, isLoading, error } = useLogin();
 
@@ -11,20 +11,19 @@ const Login = () => {
     const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     await login(formData.email, formData.password);
-    if(!error){
-setFormData({
-      email: '',
-      password: ''
-    });
+    if (!error) {
+      setFormData({
+        email: "",
+        password: "",
+      });
     }
-    
   };
 
   return (
@@ -58,7 +57,11 @@ setFormData({
         >
           Log In
         </button>
-         {error && <div className="text-sm text-red-400 bg-red-900 p-2 rounded">{error}</div>}
+        {error && (
+          <div className="text-sm text-red-400 bg-red-900 p-2 rounded">
+            {error}
+          </div>
+        )}
       </form>
     </div>
   );

@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import { Save, X } from "lucide-react";
-import { updateWorkout } from '../../api/workoutApi';
-import { useWorkoutContext } from '../../hooks/useWorkoutContext';
+import { updateWorkout } from "../../api/workoutApi";
+import { useWorkoutContext } from "../../hooks/useWorkoutContext";
 
 function UpdateWorkoutModal({ isOpen, onClose, workout }) {
   const { dispatch } = useWorkoutContext(); // Assuming you have a context to manage workouts
@@ -13,9 +13,9 @@ function UpdateWorkoutModal({ isOpen, onClose, workout }) {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setUpdatedWorkout(prev => ({
+    setUpdatedWorkout((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
   };
 
@@ -23,8 +23,8 @@ function UpdateWorkoutModal({ isOpen, onClose, workout }) {
     // You can call updateWorkout here in the future
     try {
       const response = await updateWorkout(workout._id, updatedWorkout);
-      if(response.status === 200) {
-        dispatch({ type: 'UPDATE_WORKOUT', payload: response.data });
+      if (response.status === 200) {
+        dispatch({ type: "UPDATE_WORKOUT", payload: response.data });
         // Handle success, e.g., show a success message or refresh the workout list
         onClose();
       }
@@ -32,8 +32,8 @@ function UpdateWorkoutModal({ isOpen, onClose, workout }) {
       console.error("Error updating workout:", error);
     }
   };
-//.....
-  if (!isOpen) return null; 
+  //.....
+  if (!isOpen) return null;
 
   return (
     <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center px-4">
@@ -52,7 +52,7 @@ function UpdateWorkoutModal({ isOpen, onClose, workout }) {
         <div className="space-y-5">
           <input
             name="title"
-            value={updatedWorkout?.title || ''}
+            value={updatedWorkout?.title || ""}
             onChange={handleChange}
             placeholder="Workout Title"
             className="w-full px-4 py-3 rounded-xl bg-gray-800/50 border border-gray-700/50 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-cyan-400/30 focus:border-cyan-400 transition-all"
@@ -60,7 +60,7 @@ function UpdateWorkoutModal({ isOpen, onClose, workout }) {
 
           <input
             name="load"
-            value={updatedWorkout?.load || ''}
+            value={updatedWorkout?.load || ""}
             onChange={handleChange}
             placeholder="Load (kg)"
             type="number"
@@ -69,7 +69,7 @@ function UpdateWorkoutModal({ isOpen, onClose, workout }) {
 
           <input
             name="reps"
-            value={updatedWorkout?.reps || ''}
+            value={updatedWorkout?.reps || ""}
             onChange={handleChange}
             placeholder="Reps"
             type="number"
@@ -78,7 +78,7 @@ function UpdateWorkoutModal({ isOpen, onClose, workout }) {
 
           <input
             name="sets"
-            value={updatedWorkout?.sets || ''}
+            value={updatedWorkout?.sets || ""}
             onChange={handleChange}
             placeholder="Sets"
             type="number"
@@ -93,19 +93,26 @@ function UpdateWorkoutModal({ isOpen, onClose, workout }) {
               Cancel
             </button>
             <button
-  disabled={!updatedWorkout.title || !updatedWorkout.load || !updatedWorkout.reps}
-  onClick={handleSubmit}
-  className={`w-1/2 flex items-center justify-center gap-2 py-3.5 rounded-xl font-semibold shadow-md transition-all
+              disabled={
+                !updatedWorkout.title ||
+                !updatedWorkout.load ||
+                !updatedWorkout.reps
+              }
+              onClick={handleSubmit}
+              className={`w-1/2 flex items-center justify-center gap-2 py-3.5 rounded-xl font-semibold shadow-md transition-all
     ${
-      !updatedWorkout.title || !updatedWorkout.load || !updatedWorkout.reps || !updatedWorkout.sets
-        ? 'bg-emerald-600 text-white opacity-50 cursor-not-allowed'
-        : 'bg-emerald-600 hover:bg-emerald-500 text-white hover:shadow-emerald-400/20'
+      !updatedWorkout.title ||
+      !updatedWorkout.load ||
+      !updatedWorkout.reps ||
+      !updatedWorkout.sets
+        ? "bg-emerald-600 text-white opacity-50 cursor-not-allowed"
+        : "bg-emerald-600 hover:bg-emerald-500 text-white hover:shadow-emerald-400/20"
     }
   `}
->
-  <Save size={18} />
-  <span>Update</span>
-</button>
+            >
+              <Save size={18} />
+              <span>Update</span>
+            </button>
           </div>
         </div>
       </div>

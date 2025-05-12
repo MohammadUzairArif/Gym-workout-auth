@@ -2,25 +2,25 @@ import mongoose from "mongoose";
 
 const workoutSchema = new mongoose.Schema(
   {
-    title : {
+    title: {
       type: String,
       required: true,
     },
-    sets : {
+    sets: {
       type: Number,
       required: true,
     },
-    reps : {
+    reps: {
       type: Number,
       required: true,
     },
     load: {
       type: Number,
       required: true,
-    }
+    },
   },
 
-  { timestamps: true }
+  { timestamps: true },
 );
 
 const Workout = mongoose.model("Workout", workoutSchema);

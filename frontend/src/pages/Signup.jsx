@@ -1,31 +1,29 @@
-import { useState } from 'react';
-import { useSignup } from '../hooks/useSignup';
+import { useState } from "react";
+import { useSignup } from "../hooks/useSignup";
 const Signup = () => {
   const [formData, setFormData] = useState({
-    email: '',
-    password: ''
+    email: "",
+    password: "",
   });
-    const { signup, isLoading, error } = useSignup();
+  const { signup, isLoading, error } = useSignup();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     await signup(formData.email, formData.password);
-    if(!error){
-setFormData({
-      email: '',
-      password: ''
-    });
+    if (!error) {
+      setFormData({
+        email: "",
+        password: "",
+      });
     }
-    
-    
   };
 
   return (
@@ -53,13 +51,17 @@ setFormData({
         />
 
         <button
-            disabled={isLoading}
+          disabled={isLoading}
           type="submit"
           className="w-full py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-semibold transition"
         >
           Sign Up
         </button>
-        {error && <div className="text-sm text-red-400 bg-red-900 p-2 rounded">{error}</div>}
+        {error && (
+          <div className="text-sm text-red-400 bg-red-900 p-2 rounded">
+            {error}
+          </div>
+        )}
       </form>
     </div>
   );

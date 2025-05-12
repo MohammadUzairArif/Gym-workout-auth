@@ -1,11 +1,10 @@
-import { Link } from 'react-router-dom';
-import { useLogout } from '../../hooks/uselogout';
+import { Link } from "react-router-dom";
+import { useLogout } from "../../hooks/uselogout";
 
 const Navbar = () => {
   const { logout } = useLogout();
   const handleLogout = () => {
     logout();
-    
   };
 
   return (
