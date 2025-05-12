@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { addWorkout } from "../../api/workoutApi";
 import { useWorkoutContext } from "../../hooks/useWorkoutContext";
-
-function WorkoutForm({ editWorkout, setEditWorkout }) {
+import { useAuthContext } from "../../hooks/useAuthContext";
+function WorkoutForm() {
+  const { user } = useAuthContext();
   const [workoutData, setWorkoutData] = useState({
     title: "",
     load: "",
@@ -12,6 +13,7 @@ function WorkoutForm({ editWorkout, setEditWorkout }) {
   const [error, setError] = useState(null);
   const { dispatch } = useWorkoutContext();
 
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setWorkoutData((prev) => ({ ...prev, [name]: value }));
@@ -19,8 +21,12 @@ function WorkoutForm({ editWorkout, setEditWorkout }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!user) {
+      setError("You must be logged in to add a workout.");
+      return;
+    }
     try {
-      const response = await addWorkout(workoutData);
+      const response = await addWorkout(workoutData,user.token);
       if (response.status !== 200) {
         setError(response.data.error);
         return;

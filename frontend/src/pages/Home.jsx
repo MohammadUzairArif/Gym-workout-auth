@@ -3,15 +3,15 @@ import { getWorkouts } from "../api/workoutApi";
 import WorkoutDetails from "../components/ui/WorkoutDetails";
 import WorkoutForm from "../components/ui/WorkoutForm";
 import { useWorkoutContext } from "../hooks/useWorkoutContext";
-
+import { useAuthContext } from "../hooks/useAuthContext";
 const Home = () => {
   const { workouts, dispatch } = useWorkoutContext();
   const [editWorkout, setEditWorkout] = useState(null);
-
+  const { user } = useAuthContext();
   useEffect(() => {
     const fetchWorkouts = async () => {
       try {
-        const response = await getWorkouts();
+        const response = await getWorkouts(user.token);
         if (response.status === 200) {
           dispatch({ type: "SET_WORKOUTS", payload: response.data });
         }
@@ -19,8 +19,11 @@ const Home = () => {
         console.error(error);
       }
     };
-    fetchWorkouts();
-  }, [dispatch]);
+    if (user) {
+      fetchWorkouts();
+    }
+    
+  }, [dispatch,user]);
 
   return (
     <div className="flex flex-col md:flex-row gap-8 px-6 py-10 max-w-[1400px] mx-auto font-poppins">

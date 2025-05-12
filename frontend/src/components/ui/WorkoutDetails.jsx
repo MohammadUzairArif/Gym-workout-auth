@@ -3,15 +3,20 @@ import { Trash2, Pencil } from "lucide-react"; // Import Edit icon
 import { deleteWorkout } from "../../api/workoutApi";
 import { useWorkoutContext } from "../../hooks/useWorkoutContext";
 import UpdateWorkoutModal from "./UpdateWorkoutModal";
-
+import { useAuthContext } from "../../hooks/useAuthContext";
 const WorkoutDetails = ({ workout, setEditWorkout, editWorkout }) => {
   const { dispatch } = useWorkoutContext();
   const [error, SetError] = useState(null);
   const [showModal, setShowModal] = useState(false);
+  const { user } = useAuthContext();
 
   const handleDelete = async (id) => {
+    if (!user) {
+      SetError("You must be logged in to delete a workout.");
+      return;
+    }
     try {
-      const response = await deleteWorkout(id);
+      const response = await deleteWorkout(id,user.token);
       if (response.status !== 200) {
         SetError(response.data.error);
       } else {
