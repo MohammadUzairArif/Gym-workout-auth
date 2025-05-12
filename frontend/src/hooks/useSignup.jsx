@@ -10,7 +10,7 @@ export const useSignup = () => {
     const signup = async (email, password) => {
         setIsLoading(true)
         setError(null)
-
+try{
         const response = await signupUser({ email, password })
         const data =   response.data
         if (response.status !== 200) {
@@ -25,10 +25,12 @@ export const useSignup = () => {
             setError(null)
         }
 
-        
-        
-        
-
+    }
+        catch (error) {
+            setIsLoading(false)
+            setError(error.response.data.error)
+            
+        }
     }
     return { signup, isLoading, error }
 }

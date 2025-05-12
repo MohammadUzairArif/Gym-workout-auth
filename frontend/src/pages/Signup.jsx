@@ -23,7 +23,8 @@ const Signup = () => {
       password: ''
     });
     if (error) {
-      console.error(error);
+
+      console.error('Signup error:', error);
     } else {
       console.log('Signup successful');
     }
@@ -60,11 +61,7 @@ const Signup = () => {
         >
           Sign Up
         </button>
-        {error && (
-          <p className="text-red-500 text-sm text-center mt-2">
-            {error}
-          </p>
-        )}
+        {error && <div className="text-sm text-red-400 bg-red-900 p-2 rounded">{error}</div>}
       </form>
     </div>
   );
