@@ -18,16 +18,14 @@ const Signup = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     await signup(formData.email, formData.password);
-    setFormData({
+    if(!error){
+setFormData({
       email: '',
       password: ''
     });
-    if (error) {
-
-      console.error('Signup error:', error);
-    } else {
-      console.log('Signup successful');
     }
+    
+    
   };
 
   return (
