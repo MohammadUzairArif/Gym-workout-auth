@@ -16,7 +16,7 @@ const Home = () => {
           dispatch({ type: "SET_WORKOUTS", payload: response.data });
         }
       } catch (error) {
-        console.error(error);
+        console.error(error)
       }
     };
     if (user) {
