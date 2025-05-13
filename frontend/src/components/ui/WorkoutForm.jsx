@@ -31,9 +31,12 @@ function WorkoutForm({ editWorkout, setEditWorkout }) {
         setError(response.data.error);
         return;
       }
-      dispatch({ type: "ADD_WORKOUT", payload: response.data });
-      setWorkoutData({ title: "", load: "", reps: "", sets: "" });
-      setError(null);
+      else {
+        dispatch({ type: "ADD_WORKOUT", payload: response.data });
+
+        setError(null);
+        setWorkoutData({ title: "", load: "", reps: "" , sets: "" });
+      }
     } catch (error) {
       console.error("Error adding workout:", error);
       setError("An error occurred while adding the workout.");

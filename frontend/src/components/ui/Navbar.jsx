@@ -10,7 +10,9 @@ const Navbar = () => {
   };
 
   return (
+    
     <header className="bg-gray-900/90 backdrop-blur-md shadow-md sticky top-0 z-50 border-b border-gray-800">
+      
       <div className="max-w-[1400px] mx-auto px-6 py-4 flex items-center justify-between font-poppins">
         <Link
           to="/"
@@ -33,7 +35,7 @@ const Navbar = () => {
                 to="/signup"
                 className="bg-emerald-500 hover:bg-emerald-600 text-white text-sm font-medium px-4 py-2 rounded-md transition-colors duration-200"
               >
-                Sign Up
+                Sign Up  
               </Link>
             </>
           )}

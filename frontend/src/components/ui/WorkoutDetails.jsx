@@ -20,7 +20,7 @@ const WorkoutDetails = ({ workout, setEditWorkout, editWorkout }) => {
       if (response.status !== 200) {
         SetError(response.data.error);
       } else {
-        dispatch({ type: "DELETE_WORKOUT", payload: { _id: id } });
+        dispatch({ type: "DELETE_WORKOUT", payload:  id  });
         SetError(null);
       }
     } catch (error) {

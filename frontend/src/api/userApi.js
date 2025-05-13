@@ -5,10 +5,10 @@ const api = axios.create({
 });
 
 export const signupUser = (data) => {
-  return api.post("/users/signup", data);
+  return api.post("/user/signup", data);
 };
 
 // Login User
 export const loginUser = (data) => {
-  return api.post("/users/login", data);
+  return api.post("/user/login", data);
 };
