@@ -4,6 +4,7 @@ import WorkoutDetails from "../components/ui/WorkoutDetails";
 import WorkoutForm from "../components/ui/WorkoutForm";
 import { useWorkoutContext } from "../hooks/useWorkoutContext";
 import { useAuthContext } from "../hooks/useAuthContext";
+
 const Home = () => {
   const { workouts, dispatch } = useWorkoutContext();
   const [editWorkout, setEditWorkout] = useState(null);
@@ -20,6 +21,7 @@ const Home = () => {
       }
     };
     if (user) {
+
       fetchWorkouts();
     }
     

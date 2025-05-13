@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { addWorkout } from "../../api/workoutApi";
 import { useWorkoutContext } from "../../hooks/useWorkoutContext";
 import { useAuthContext } from "../../hooks/useAuthContext";
-function WorkoutForm() {
+function WorkoutForm({ editWorkout, setEditWorkout }) {
   const { user } = useAuthContext();
   const [workoutData, setWorkoutData] = useState({
     title: "",

@@ -10,17 +10,20 @@ export const useSignup = () => {
   const signup = async (email, password) => {
     setIsLoading(true);
     setError(null);
+
     try {
       const response = await signupUser({ email, password });
       const data = response.data;
       if (response.status !== 200) {
         setIsLoading(false);
         setError(data.error);
-        return;
-      }
-      if (response.status === 200) {
+      } else {
+        // Save the user to local storage
         localStorage.setItem("user", JSON.stringify(data));
+
         dispatch({ type: "LOGIN", payload: data });
+        // Update the auth context
+
         setIsLoading(false);
         setError(null);
       }

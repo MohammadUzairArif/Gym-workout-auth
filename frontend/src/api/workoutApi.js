@@ -5,10 +5,10 @@ const api = axios.create({
   baseURL: "http://localhost:5000/api",
 });
 
-// Helper to add Authorization header
+// Helper to add authorization header
 const authHeader = (token) => ({
   headers: {
-    Authorization: `Bearer ${token}`,
+    authorization: `Bearer ${token}`,
   },
 });
 

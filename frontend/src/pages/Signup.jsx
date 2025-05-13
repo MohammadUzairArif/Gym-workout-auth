@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useSignup } from "../hooks/useSignup";
+
 const Signup = () => {
   const [formData, setFormData] = useState({
     email: "",
@@ -18,52 +19,54 @@ const Signup = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     await signup(formData.email, formData.password);
-    if (!error) {
-      setFormData({
-        email: "",
-        password: "",
-      });
-    }
   };
 
   return (
-    <div className="max-w-md mx-auto bg-gray-900/80 border border-gray-800 p-8 rounded-2xl shadow-lg font-poppins text-white">
-      <h2 className="text-2xl font-bold mb-6 text-center text-white">
-        Sign up for <span className="text-emerald-400">WorkoutBuddy</span>
-      </h2>
-      <form onSubmit={handleSubmit} className="space-y-5">
-        <input
-          type="email"
-          name="email"
-          placeholder="Email"
-          value={formData.email}
-          onChange={handleChange}
-          className="w-full px-4 py-3 rounded-xl bg-gray-800/60 border border-gray-700 placeholder-gray-500 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500/30"
-        />
+    <form
+      onSubmit={handleSubmit}
+      className="max-w-md mx-auto bg-gray-900/80 backdrop-blur-lg border border-gray-800 rounded-2xl p-6 shadow-2xl hover:shadow-emerald-500/10 transition-all duration-300"
+    >
+      <h3 className="text-2xl font-extrabold mb-6 pb-2 text-white">Sign Up</h3>
 
-        <input
-          type="password"
-          name="password"
-          placeholder="Password"
-          value={formData.password}
-          onChange={handleChange}
-          className="w-full px-4 py-3 rounded-xl bg-gray-800/60 border border-gray-700 placeholder-gray-500 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500/30"
-        />
+      <div className="space-y-6">
+        <div>
+          <input
+            type="email"
+            name="email"
+            placeholder="Email"
+            value={formData.email}
+            onChange={handleChange}
+            className="w-full px-4 py-3 rounded-xl bg-gray-800/50 border border-gray-700/50 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-emerald-400/20 focus:border-emerald-400 transition-all"
+          />
+        </div>
+
+        <div>
+          <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            value={formData.password}
+            onChange={handleChange}
+            className="w-full px-4 py-3 rounded-xl bg-gray-800/50 border border-gray-700/50 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-emerald-400/20 focus:border-emerald-400 transition-all"
+          />
+        </div>
 
         <button
           disabled={isLoading}
           type="submit"
-          className="w-full py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-semibold transition"
+          className="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-semibold py-3.5 rounded-xl shadow-lg hover:shadow-emerald-400/20 transition-all"
         >
           Sign Up
         </button>
+
+        {/* ✅ Error shown with consistent spacing & styling */}
         {error && (
-          <div className="text-sm text-red-400 bg-red-900 p-2 rounded">
+          <div className="bg-red-500/10 border border-red-500/30 text-red-400 px-4 py-2 rounded-lg">
             {error}
           </div>
         )}
-      </form>
-    </div>
+      </div>
+    </form>
   );
 };
 
