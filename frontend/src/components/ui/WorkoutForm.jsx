@@ -47,35 +47,36 @@ function WorkoutForm() {
 
   return (
     <form
-      onSubmit={handleSubmit}
-      className="bg-gray-900 text-white p-6 rounded-xl shadow-md border border-gray-700 font-poppins space-y-4"
-    >
-      <h3 className="text-xl font-semibold text-emerald-400">
-        Add New Workout
-      </h3>
-      {["title", "load", "reps", "sets"].map((field) => (
-        <input
-          key={field}
-          type={field === "title" ? "text" : "number"}
-          name={field}
-          value={workoutData[field]}
-          onChange={handleChange}
-          placeholder={field.charAt(0).toUpperCase() + field.slice(1)}
-          className="w-full px-4 py-2 rounded-md bg-gray-800 border border-gray-600 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-emerald-500"
-        />
-      ))}
-      <button
-        type="submit"
-        className="w-full bg-emerald-500 hover:bg-emerald-600 text-white py-2 rounded-md transition"
-      >
-        Add Workout
-      </button>
-      {error && (
-        <div className="text-sm text-red-400 bg-red-900 p-2 rounded">
-          {error}
-        </div>
-      )}
-    </form>
+  onSubmit={handleSubmit}
+  className="bg-gray-900/80 backdrop-blur-md p-6 rounded-2xl shadow-2xl border border-gray-800 font-poppins space-y-4 transition-all"
+>
+  <h3 className="text-xl font-semibold bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent">
+    Add New Workout
+  </h3>
+  {["title", "load", "reps", "sets"].map((field) => (
+    <input
+      key={field}
+      type={field === "title" ? "text" : "number"}
+      name={field}
+      value={workoutData[field]}
+      onChange={handleChange}
+      placeholder={field.charAt(0).toUpperCase() + field.slice(1)}
+      className="w-full px-4 py-3 rounded-lg bg-gray-800 border border-gray-700 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/60 transition-all"
+    />
+  ))}
+  <button
+    type="submit"
+    className="w-full bg-emerald-500 hover:bg-emerald-600 text-white py-3 rounded-lg shadow-md transition-all"
+  >
+    Add Workout
+  </button>
+  {error && (
+    <div className="text-sm text-red-400 bg-red-900 p-3 rounded">
+      {error}
+    </div>
+  )}
+</form>
+
   );
 }
 

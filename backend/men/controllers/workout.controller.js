@@ -18,6 +18,7 @@ const getWorkouts = async (req, res) => {
 // Create a new workout
 const createWorkout = async (req, res) => {
   const { title, reps, load, sets } = req.body;
+  const user_id = req.user._id;
 
   try {
     const workout = new WorkoutModel({
@@ -25,6 +26,7 @@ const createWorkout = async (req, res) => {
       reps,
       load,
       sets,
+      user_id,
     });
     await workout.save();
     res.status(200).json(workout);
