@@ -13,17 +13,17 @@ const workoutsReducer = (state, action) => {
         workouts: [action.payload, ...state.workouts],
       };
     case "DELETE_WORKOUT":
-      return {
-        workouts: state.workouts.filter(
-          (workout) => workout._id !== action.payload._id,
-        ),
-      };
+  return {
+    workouts: state.workouts.filter(
+      (workout) => workout._id !== action.payload
+    ),
+  };
     case "UPDATE_WORKOUT":
-      return {
-        workouts: state.workouts.map((workout) =>
-          workout._id === action.payload._id ? action.payload : workout,
-        ),
-      };
+  return {
+    workouts: state.workouts.map((workout) =>
+      workout._id === action.payload._id ? action.payload : workout,
+    ),
+  };
     default:
       return state;
   }

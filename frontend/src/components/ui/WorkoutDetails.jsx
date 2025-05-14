@@ -1,13 +1,12 @@
 import React, { useState } from "react";
-import { Trash2, Pencil } from "lucide-react"; // Import Edit icon
+import { Trash2, Pencil, Dumbbell, Repeat, Calendar, Layers } from "lucide-react";
 import { deleteWorkout } from "../../api/workoutApi";
 import { useWorkoutContext } from "../../hooks/useWorkoutContext";
-import UpdateWorkoutModal from "./UpdateWorkoutModal";
 import { useAuthContext } from "../../hooks/useAuthContext";
-const WorkoutDetails = ({ workout, setEditWorkout, editWorkout }) => {
+
+const WorkoutDetails = ({ workout, onEdit }) => {
   const { dispatch } = useWorkoutContext();
   const [error, SetError] = useState(null);
-  const [showModal, setShowModal] = useState(false);
   const { user } = useAuthContext();
 
   const handleDelete = async (id) => {
@@ -16,11 +15,11 @@ const WorkoutDetails = ({ workout, setEditWorkout, editWorkout }) => {
       return;
     }
     try {
-      const response = await deleteWorkout(id,user.token);
+      const response = await deleteWorkout(id, user.token);
       if (response.status !== 200) {
         SetError(response.data.error);
       } else {
-        dispatch({ type: "DELETE_WORKOUT", payload:  id  });
+        dispatch({ type: "DELETE_WORKOUT", payload: id });
         SetError(null);
       }
     } catch (error) {
@@ -29,61 +28,101 @@ const WorkoutDetails = ({ workout, setEditWorkout, editWorkout }) => {
     }
   };
 
-  const handleEdit = (id, data) => {
-    setShowModal(true);
+  const handleEdit = () => {
+    onEdit(workout);
   };
 
   return (
-    <div className="bg-white dark:bg-gray-800 shadow-md rounded-lg p-5 mb-4 font-poppins border border-gray-200 dark:border-gray-700 transition-all">
-      <h4 className="text-xl font-bold mb-2 text-gray-900 dark:text-white">
-        {workout.title}
-      </h4>
-      <p className="text-gray-700 dark:text-gray-300 mb-1">
-        <strong className="text-gray-900 dark:text-gray-100">
-          Load (kg):{" "}
-        </strong>
-        {workout.load}
-      </p>
-      <p className="text-gray-700 dark:text-gray-300 mb-1">
-        <strong className="text-gray-900 dark:text-gray-100">Reps: </strong>
-        {workout.reps}
-      </p>
-      <p className="text-gray-700 dark:text-gray-300 mb-1">
-        <strong className="text-gray-900 dark:text-gray-100">Sets: </strong>
-        {workout.sets}
-      </p>
-      <p className="text-sm text-gray-500 dark:text-gray-400 mt-2">
-        {new Date(workout.createdAt).toLocaleString(undefined, {
-          dateStyle: "medium",
-          timeStyle: "short",
-          hour12: true,
-        })}
-      </p>
+    <div className="relative bg-gray-900/80 backdrop-blur-lg border border-gray-800 rounded-2xl p-6 shadow-2xl hover:shadow-emerald-500/10 transition-shadow duration-300">
+      {/* Header */}
+      <div className="mb-6 flex justify-between items-start">
+        <div>
+          <h4 className="text-2xl font-extrabold bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent tracking-tight">
+            {workout.title}
+          </h4>
+          <div className="mt-2 h-1 w-12 bg-gradient-to-r from-emerald-400/80 to-cyan-400/80 rounded-full" />
+        </div>
 
-      <div className="mt-4 flex items-center gap-3">
-        <button
-          onClick={() => handleDelete(workout._id)}
-          className="flex items-center gap-2 px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition-all"
-        >
-          <Trash2 size={18} />
-          Delete
-        </button>
-        <button
-          onClick={() => handleEdit(workout._id)} // Add an edit handler
-          className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-all"
-        >
-          <Pencil size={18} />
-          Edit
-        </button>
-        <UpdateWorkoutModal
-          isOpen={showModal}
-          onClose={() => setShowModal(false)}
-          workout={workout}
-        />
+        {/* Action buttons */}
+        <div className="flex gap-2">
+          <button
+            onClick={handleEdit}
+            className="p-2 rounded-xl border border-emerald-500/20 bg-emerald-500/5 hover:bg-emerald-500/10 hover:border-emerald-500/40 transition-all duration-200 hover:scale-105 shadow-md hover:shadow-emerald-500/10"
+            title="Edit Workout"
+          >
+            <Pencil className="text-emerald-400" size={20} strokeWidth={2.2} />
+          </button>
+          <button
+            onClick={() => handleDelete(workout._id)}
+            className="p-2 rounded-xl border border-red-500/20 bg-red-500/5 hover:bg-red-500/10 hover:border-red-500/40 transition-all duration-200 hover:scale-105 shadow-md hover:shadow-red-500/10"
+            title="Delete Workout"
+          >
+            <Trash2 className="text-red-500" size={20} strokeWidth={2.2} />
+          </button>
+        </div>
       </div>
 
+      {/* Stats */}
+      <div className="grid grid-cols-3 gap-3 mb-6">
+        <div className="flex items-center gap-3 bg-gray-800/50 p-4 rounded-xl border border-gray-700/50">
+          <div className="p-2.5 bg-gradient-to-br from-emerald-500/15 to-cyan-500/10 rounded-xl">
+            <Dumbbell className="text-emerald-400" size={22} strokeWidth={2.5} />
+          </div>
+          <div>
+            <p className="text-xs font-medium text-gray-400/90 uppercase tracking-wider">Load</p>
+            <p className="text-xl font-bold text-white mt-0.5">
+              {workout.load}
+              <span className="text-sm text-gray-400 ml-1">kg</span>
+            </p>
+          </div>
+        </div>
+
+        <div className="flex items-center gap-3 bg-gray-800/50 p-4 rounded-xl border border-gray-700/50">
+          <div className="p-2.5 bg-gradient-to-br from-cyan-500/15 to-emerald-500/10 rounded-xl">
+            <Repeat className="text-cyan-400" size={22} strokeWidth={2.5} />
+          </div>
+          <div>
+            <p className="text-xs font-medium text-gray-400/90 uppercase tracking-wider">Reps</p>
+            <p className="text-xl font-bold text-white mt-0.5">
+              {workout.reps}
+              <span className="text-sm text-gray-400 ml-1">times</span>
+            </p>
+          </div>
+        </div>
+
+        <div className="flex items-center gap-3 bg-gray-800/50 p-4 rounded-xl border border-gray-700/50">
+          <div className="p-2.5 bg-gradient-to-br from-indigo-500/15 to-purple-500/10 rounded-xl">
+            <Layers className="text-indigo-400" size={22} strokeWidth={2.5} />
+          </div>
+          <div>
+            <p className="text-xs font-medium text-gray-400/90 uppercase tracking-wider">Sets</p>
+            <p className="text-xl font-bold text-white mt-0.5">
+              {workout.sets}
+              <span className="text-sm text-gray-400 ml-1">sets</span>
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* Date */}
+      <div className="flex items-center gap-2 text-sm text-gray-400/90">
+        <div className="p-1.5 bg-gray-800/50 rounded-lg border border-gray-700/50">
+          <Calendar className="text-cyan-400" size={16} strokeWidth={2} />
+        </div>
+        <span className="font-medium">
+          {new Date(workout.createdAt).toLocaleString(undefined, {
+            dateStyle: "medium",
+            timeStyle: "short",
+            hour12: true,
+          })}
+        </span>
+      </div>
+
+      {/* Error Message */}
       {error && (
-        <p className="text-sm text-red-500 mt-2 dark:text-red-400">{error}</p>
+        <div className="bg-red-500/10 border border-red-500/30 text-red-400 px-4 py-2 rounded-lg mt-4">
+          {error}
+        </div>
       )}
     </div>
   );

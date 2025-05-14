@@ -2,7 +2,9 @@ import React, { useState } from "react";
 import { addWorkout } from "../../api/workoutApi";
 import { useWorkoutContext } from "../../hooks/useWorkoutContext";
 import { useAuthContext } from "../../hooks/useAuthContext";
-function WorkoutForm({ editWorkout, setEditWorkout }) {
+
+
+function WorkoutForm() {
   const { user } = useAuthContext();
   const [workoutData, setWorkoutData] = useState({
     title: "",
@@ -49,7 +51,7 @@ function WorkoutForm({ editWorkout, setEditWorkout }) {
       className="bg-gray-900 text-white p-6 rounded-xl shadow-md border border-gray-700 font-poppins space-y-4"
     >
       <h3 className="text-xl font-semibold text-emerald-400">
-        {editWorkout ? "Update current Workout" : "Add a new Workout"}
+        Add New Workout
       </h3>
       {["title", "load", "reps", "sets"].map((field) => (
         <input
@@ -66,7 +68,7 @@ function WorkoutForm({ editWorkout, setEditWorkout }) {
         type="submit"
         className="w-full bg-emerald-500 hover:bg-emerald-600 text-white py-2 rounded-md transition"
       >
-        {editWorkout ? "Update Workout" : "Add Workout"}
+        Add Workout
       </button>
       {error && (
         <div className="text-sm text-red-400 bg-red-900 p-2 rounded">
