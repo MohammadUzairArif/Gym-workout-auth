@@ -6,25 +6,25 @@ import { useAuthContext } from "../../hooks/useAuthContext";
 
 const WorkoutDetails = ({ workout, onEdit }) => {
   const { dispatch } = useWorkoutContext();
-  const [error, SetError] = useState(null);
+  const [error, setError] = useState(null);
   const { user } = useAuthContext();
 
   const handleDelete = async (id) => {
     if (!user) {
-      SetError("You must be logged in to delete a workout.");
+      setError("You must be logged in to delete a workout.");
       return;
     }
     try {
       const response = await deleteWorkout(id, user.token);
       if (response.status !== 200) {
-        SetError(response.data.error);
+        setError(response.data.error);
       } else {
         dispatch({ type: "DELETE_WORKOUT", payload: id });
-        SetError(null);
+        setError(null);
       }
     } catch (error) {
       console.error("Error deleting workout:", error);
-      SetError("An error occurred while deleting the workout.");
+      setError("An error occurred while deleting the workout.");
     }
   };
 
@@ -33,7 +33,7 @@ const WorkoutDetails = ({ workout, onEdit }) => {
   };
 
   return (
-    <div className="relative bg-gray-900/80 backdrop-blur-lg border border-gray-800 rounded-2xl p-6 shadow-2xl hover:shadow-emerald-500/10 transition-shadow duration-300">
+    <div className="relative bg-gray-900/80 backdrop-blur-lg border border-gray-800 rounded-2xl p-6 shadow-2xl hover:shadow-emerald-500/10 transition-shadow duration-300 w-full max-w-md md:max-w-full md:w-full">
       {/* Header */}
       <div className="mb-6 flex justify-between items-start">
         <div>
@@ -63,8 +63,8 @@ const WorkoutDetails = ({ workout, onEdit }) => {
       </div>
 
       {/* Stats */}
-      <div className="grid grid-cols-3 gap-3 mb-6">
-        <div className="flex items-center gap-3 bg-gray-800/50 p-4 rounded-xl border border-gray-700/50">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 mb-6">
+        <div className="flex items-center gap-3 bg-gray-800/50 p-4 rounded-xl border border-gray-700/50 w-full">
           <div className="p-2.5 bg-gradient-to-br from-emerald-500/15 to-cyan-500/10 rounded-xl">
             <Dumbbell className="text-emerald-400" size={22} strokeWidth={2.5} />
           </div>
@@ -77,7 +77,7 @@ const WorkoutDetails = ({ workout, onEdit }) => {
           </div>
         </div>
 
-        <div className="flex items-center gap-3 bg-gray-800/50 p-4 rounded-xl border border-gray-700/50">
+        <div className="flex items-center gap-3 bg-gray-800/50 p-4 rounded-xl border border-gray-700/50 w-full">
           <div className="p-2.5 bg-gradient-to-br from-cyan-500/15 to-emerald-500/10 rounded-xl">
             <Repeat className="text-cyan-400" size={22} strokeWidth={2.5} />
           </div>
@@ -90,7 +90,7 @@ const WorkoutDetails = ({ workout, onEdit }) => {
           </div>
         </div>
 
-        <div className="flex items-center gap-3 bg-gray-800/50 p-4 rounded-xl border border-gray-700/50">
+        <div className="flex items-center gap-3 bg-gray-800/50 p-4 rounded-xl border border-gray-700/50 w-full">
           <div className="p-2.5 bg-gradient-to-br from-indigo-500/15 to-purple-500/10 rounded-xl">
             <Layers className="text-indigo-400" size={22} strokeWidth={2.5} />
           </div>

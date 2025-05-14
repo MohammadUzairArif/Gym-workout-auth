@@ -3,8 +3,9 @@ import mongoose from "mongoose";
 
 // Get all workouts
 const getWorkouts = async (req, res) => {
+  const user_id = req.user._id;
   try {
-    const workouts = await WorkoutModel.find({}).sort({ createdAt: -1 });
+    const workouts = await WorkoutModel.find({user_id}).sort({ createdAt: -1 });
     if (!workouts) {
       return res.status(404).json({ error: "No workouts found" });
     }
@@ -38,6 +39,7 @@ const createWorkout = async (req, res) => {
 
 // Get a single workout by ID
 const getWorkout = async (req, res) => {
+  
   const { id } = req.params;
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(404).json({ error: "Workout not found" });

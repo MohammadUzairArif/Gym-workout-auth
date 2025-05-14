@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useLogin } from "../hooks/useLogin";
-
+import { Link } from "react-router-dom";
 const Login = () => {
   const { login, isLoading, error } = useLogin();
   const [formData, setFormData] = useState({
@@ -66,6 +66,15 @@ const Login = () => {
             {error}
           </div>
         )}
+        <p className="text-center text-sm text-gray-400 mt-4">
+            Don't have an account?{" "}
+            <Link
+              to="/signup"
+              className="text-emerald-400 hover:text-emerald-300 underline transition"
+            >
+              Create account
+            </Link>
+          </p>
       </div>
     </form>
   );
