@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Save, X } from "lucide-react";
-import { updateWorkout } from "../../api/workoutApi";
+import { updateWorkout } from "../../api/workoutApi.js";
 import { useWorkoutContext } from "../../hooks/useWorkoutContext";
 import { useAuthContext } from "../../hooks/useAuthContext";
 

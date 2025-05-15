@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Trash2, Pencil, Dumbbell, Repeat, Calendar, Layers } from "lucide-react";
-import { deleteWorkout } from "../../api/workoutApi";
+import { deleteWorkout } from "../../api/workoutApi.js";
 import { useWorkoutContext } from "../../hooks/useWorkoutContext";
 import { useAuthContext } from "../../hooks/useAuthContext";
 

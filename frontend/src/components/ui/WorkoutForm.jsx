@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { addWorkout } from "../../api/workoutApi";
+import { addWorkout } from "../../api/workoutApi.js";
 import { useWorkoutContext } from "../../hooks/useWorkoutContext";
 import { useAuthContext } from "../../hooks/useAuthContext";
 

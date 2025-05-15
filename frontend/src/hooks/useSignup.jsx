@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useAuthContext } from "./useAuthContext";
-import { signupUser } from "../api/userApi";
+import { signupUser } from "../api/userApi.js";
 
 export const useSignup = () => {
   const [error, setError] = useState(null);

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useSignup } from "../hooks/useSignup";
+import { useSignup } from "../hooks/useSignup.jsx";
 import { Link } from "react-router-dom";
 const Signup = () => {
   const [formData, setFormData] = useState({
