@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { useLogin } from "../hooks/UseLogin.jsx";
+import { UseLogin } from "../hooks/UseLogin.jsx";
 import { Link } from "react-router-dom";
 
 const Login = () => {
-  const { login, isLoading, error } = useLogin();
+  const { login, isLoading, error } = UseLogin();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
