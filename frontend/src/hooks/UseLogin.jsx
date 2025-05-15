@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { useAuthContext } from "./useAuthContext";
+import { useAuthContext } from "./useAuthContext.jsx";
 import { loginUser } from "../api/userApi.js";
 
-export const useLogin = () => {
+export const UseLogin = () => {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(null);
   const { dispatch } = useAuthContext();
